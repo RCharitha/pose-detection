@@ -21,25 +21,23 @@ direction=None
 feedback="start position"
 
 app = Flask(__name__)
-app.secret_key = secrets.token_hex(32) # Required for flash messages and session
+app.secret_key = secrets.token_hex(32)
 
-# Dictionary to store exercise states for each session
+
 exercise_states = {}
 exercise_states_lock = threading.Lock()
 
-# Helper to connect to the database
 def get_db_connection():
     conn = sqlite3.connect('database.db')
     conn.row_factory = sqlite3.Row
     return conn
 
-# Home redirects to login
+
 @app.route("/")
 def home():
     return render_template('home.html')
 
-# Registration route
-# Registration route
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -70,10 +68,8 @@ def register():
     return render_template('register.html')
 
 
-# Login route
 from werkzeug.security import check_password_hash
 
-# Login route
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -86,8 +82,8 @@ def login():
 
         if user and check_password_hash(user['password'], password):
             session['user'] = user['username']
-            session['user_id'] = user['id']   # store ID too (useful for workouts, etc.)
-            session['session_id'] = secrets.token_hex(16)  # Unique session ID
+            session['user_id'] = user['id']  
+            session['session_id'] = secrets.token_hex(16) 
             flash('Login successful!', 'success')
             return redirect(url_for('dashboard'))
         else:
@@ -95,8 +91,6 @@ def login():
 
     return render_template('login.html')
 
-
-# Dashboard route
 @app.route('/dashboard')
 def dashboard():
     if 'user' not in session:
@@ -106,7 +100,7 @@ def dashboard():
 
 @app.route('/exercise/<exercise>')
 def exercise(exercise):
-    # Initialize exercise state for this session
+    
     session_id = session.get('session_id')
     if session_id:
         with exercise_states_lock:
@@ -123,7 +117,7 @@ def video_feed(exercise, session_id):
     
     def generate():
         if not session_id or session_id not in exercise_states:
-            # Return error frame if no session
+          
             error_frame = np.zeros((480, 640, 3), dtype=np.uint8)
             cv2.putText(error_frame, "Session Error", (150, 240), 
                        cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
@@ -134,27 +128,25 @@ def video_feed(exercise, session_id):
                        b'Content-Type: image/jpeg\r\n\r\n' + frame_bytes + b'\r\n')
             return
         
-        # Get state for this session
+       
         with exercise_states_lock:
             if session_id not in exercise_states:
                 exercise_states[session_id] = ExerciseState()
                 exercise_states[session_id].start_time = time.time()
             
             state = exercise_states[session_id]
-        
-        # Try different camera indices
+
         cap = None
         for camera_index in [0, 1, 2]:
             cap = cv2.VideoCapture(camera_index)
             if cap.isOpened():
-                print(f"✅ Camera {camera_index} opened successfully")
+                
                 break
             if cap:
                 cap.release()
         
         if not cap or not cap.isOpened():
-            print("❌ No camera found")
-            # Return a static error image
+            
             error_frame = np.zeros((480, 640, 3), dtype=np.uint8)
             cv2.putText(error_frame, "Camera Not Available", (150, 240), 
                        cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
@@ -173,16 +165,16 @@ def video_feed(exercise, session_id):
             while True:
                 ret, frame = cap.read()
                 if not ret:
-                    print("❌ Failed to grab frame")
+                    
                     break
 
-                # Process frame
+                
                 frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 results = pose.process(frame_rgb)
 
                 if results.pose_landmarks:
                     try:
-                        # Update the state with exercise logic
+                        
                         with exercise_states_lock:
                             state = logic_function(results.pose_landmarks.landmark, state)
                             exercise_states[session_id] = state
@@ -195,17 +187,16 @@ def video_feed(exercise, session_id):
                             mp_draw.DrawingSpec(color=(245,66,230), thickness=2, circle_radius=2)
                         )
                     except Exception as e:
-                        print(f"❌ Error in exercise logic: {e}")
+                        print(f"Error in exercise logic: {e}")
                         state.feedback = f"Error: {str(e)}"
                         state.feedback_class = "error"
 
-                # Add overlay
                 cv2.putText(frame, f"Reps: {state.reps}", (10, 30),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
                 cv2.putText(frame, f"Time: {int(state.current_time)}s", (10, 70),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
                 
-                # Feedback color
+   
                 if state.feedback_class == "correct":
                     color = (0, 255, 0)
                 elif state.feedback_class == "warning":
@@ -218,7 +209,7 @@ def video_feed(exercise, session_id):
                 cv2.putText(frame, state.feedback, (10, 110),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.7, color, 2)
 
-                # Encode frame
+               
                 ret, buffer = cv2.imencode('.jpg', frame)
                 if ret:
                     frame_bytes = buffer.tobytes()
@@ -270,10 +261,9 @@ def complete_workout(exercise):
     if session_id and session_id in exercise_states:
         with exercise_states_lock:
             state = exercise_states[session_id]
-            # Remove the state from memory
+           
             del exercise_states[session_id]
 
-    # Build stats dictionary
     stats = {
         "reps": state.reps,
         "time_minutes": int(state.current_time) // 60,
@@ -296,4 +286,5 @@ def logout():
     return redirect(url_for('login'))
 
 if __name__ == "__main__":
+
     app.run(debug=True)
