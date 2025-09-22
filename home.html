@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitTrack - AI Fitness Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">FitTrack</div>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('register') }}">Register</a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>AI-Powered Fitness Tracker</h1>
+                <p>Correct your posture, count reps, and track your workout in real-time using computer vision.</p>
+                <div class="cta-buttons">
+                    <a href="{{ url_for('register') }}" class="btn primary">Start Training</a>
+                    <a href="#features" class="btn secondary">Learn More</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="container">
+                <h2>What FitTrack Offers</h2>
+                <div class="features-grid">
+                    <div class="feature">
+                        <div class="icon">🤖</div>
+                        <h3>Pose Detection</h3>
+                        <p>Detect and guide your body posture using computer vision algorithms.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="icon">🔁</div>
+                        <h3>Repetition Counter</h3>
+                        <p>Automatically count your push-ups, squats, and other exercises accurately.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="icon">📈</div>
+                        <h3>Progress Tracker</h3>
+                        <p>View detailed analytics and track your fitness improvement over time.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="icon">🎯</div>
+                        <h3>Real-Time Feedback</h3>
+                        <p>Get instant feedback on incorrect form and how to fix it.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="icon">🧠</div>
+                        <h3>AI Recommendations</h3>
+                        <p>Receive workout suggestions based on your current fitness level and goals.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="icon">📹</div>
+                        <h3>Live Camera Integration</h3>
+                        <p>Track your form in real-time using your webcam or phone camera.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 FitTrack. Built with ❤️ by fitness & tech enthusiasts.</p>
+        </div>
+    </footer>
+</body>
+</html>

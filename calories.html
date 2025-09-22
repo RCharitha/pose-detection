@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calorie Finder</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 50px;
+    }
+    .container {
+      max-width: 400px;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    input {
+      width: 80%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #28a745;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Food Calorie Finder</h2>
+    <input type="text" id="foodInput" placeholder="Enter food (e.g. apple)">
+    <button onclick="getCalories()">Search</button>
+    <div class="result" id="resultBox">Calories will appear here...</div>
+  </div>
+
+  <script>
+    async function getCalories() {
+      const food = document.getElementById("foodInput").value;
+      const resultBox = document.getElementById("resultBox");
+
+      if (!food) {
+        resultBox.innerText = "⚠️ Please enter a food item!";
+        return;
+      }
+
+      const apiKey = "YOUR_API_KEY"; // 🔑 Replace with your USDA API key
+      const url = `https://api.nal.usda.gov/fdc/v1/foods/search?query=${encodeURIComponent(food)}&pageSize=1&api_key=${apiKey}`;
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (data.foods && data.foods.length > 0) {
+          const foodItem = data.foods[0];
+
+          // Find calories from nutrient list (Energy in kcal)
+          const caloriesInfo = foodItem.foodNutrients.find(n => n.nutrientName === "Energy");
+
+          if (caloriesInfo) {
+            resultBox.innerText = `🍎 ${foodItem.description} → ${caloriesInfo.value} ${caloriesInfo.unitName}`;
+          } else {
+            resultBox.innerText = "❌ Calories not found for this food.";
+          }
+        } else {
+          resultBox.innerText = "❌ Food not found.";
+        }
+      } catch (error) {
+        resultBox.innerText = "⚠️ Error fetching data!";
+        console.error(error);
+      }
+    }
+  </script>
+</body>
+</html>

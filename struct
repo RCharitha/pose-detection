@@ -1,0 +1,32 @@
+fitness_tracker/
+│
+├── app.py                  ← Flask app entry point
+├── static/                 ← Static assets
+│   ├── css/
+│   ├── js/
+│   └── images/
+│
+├── templates/              ← HTML pages
+│   ├── login.html
+│   ├── dashboard.html
+│   ├── profile.html
+│   ├── calendar.html
+│   └── exercise.html
+│
+├── pose_module/            ← Python modules for each exercise logic
+│   ├── squat.py
+│   ├── bicep_curl.py
+│   ├── plank.py
+│   └── ...
+│
+├── database/               ← Store user data
+│   └── user_data.db (SQLite)
+│
+├── utils/
+│   ├── auth.py             ← User registration/login logic
+│   ├── reminders.py        ← Schedule pop-up notifications
+│   └── progress_tracker.py ← Track and save user session data
+│
+├── static/uploads/         ← Temporarily store captured video frames (if needed)
+├── requirements.txt
+└── README.md

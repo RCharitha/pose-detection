@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ exercise|capitalize }} Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/exercise.css') }}">
+</head>
+<body>
+
+<div class="exercise-container">
+    
+    <!-- Left Half - Pose Detection Video -->
+    <div class="video-section">
+        <img id="video-feed" src="{{ url_for('video_feed', exercise=exercise, session_id=session_id) }}" 
+         alt="Pose Detection Feed">
+    </div>
+
+    <!-- Right Half - Stats -->
+    <div class="stats-section">
+        <h1>{{ exercise|capitalize }}</h1>
+        <div class="stat-card">
+            <h2>Reps</h2>
+            <p id="reps">0</p>
+        </div>
+        <div class="stat-card">
+            <h2>Time</h2>
+            <p id="timer">00:00</p>
+        </div>
+        <div class="feedback correct" id="feedback">Perfect Form ✅</div>
+
+        <!-- Complete Exercise Button -->
+        <div class="button-container">
+            <a href="{{ url_for('complete_workout', exercise=exercise) }}" class="complete-btn">
+                Complete Exercise
+            </a>
+        </div>
+    </div>
+
+</div>
+
+<script>
+// Replace the timer with server-synced stats
+function updateStats() {
+    fetch(`/get_stats?exercise={{ exercise }}`)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("reps").textContent = data.reps;
+            document.getElementById("feedback").textContent = data.feedback;
+            document.getElementById("feedback").className = `feedback ${data.feedback_class}`;
+            
+            // Format time (MM:SS)
+            const minutes = Math.floor(data.time / 60).toString().padStart(2, '0');
+            const seconds = Math.floor(data.time % 60).toString().padStart(2, '0');
+            document.getElementById("timer").textContent = `${minutes}:${seconds}`;
+        });
+}
+setInterval(updateStats, 500);
+</script>
+</body>
+</html>

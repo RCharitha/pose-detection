@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+        <div class="container">
+            <div class="logo">FitTrack</div>
+            <nav>
+                
+            </nav>
+        </div>
+  </header>
+  <section class="back">
+    <div class="form-container">
+        <h2 class="form-title">Register</h2>
+        <form method="POST">
+            <input class="form-input" type="text" name="username" placeholder="Username" required>
+            <input class="form-input" type="text" name="number" placeholder="Mobile Number" required>
+            <input class="form-input" type="number" name="weight" step="0.1" min="30" max="200" placeholder="Weight (kg)" required>
+            <input class="form-input" type="password" name="password" placeholder="Password" required>
+            <button class="form-button" type="submit">Register</button>
+        </form>
+        <a class="form-link" href="{{ url_for('login') }}">Already registered? Login here</a>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="error-messages">
+                {% for msg in messages %}
+                    <li>{{ msg }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% endwith %}
+    </div>
+  </section>
+</body>
+</html>

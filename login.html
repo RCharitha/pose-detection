@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+</head>
+<body>
+  <header>
+        <div class="container">
+            <div class="logo">FitTrack</div>
+            
+        </div>
+  </header>
+    <div class="form-container">
+        <h2 class="form-title">Login</h2>
+        <form method="POST">
+            <input class="form-input" type="text" name="username" placeholder="Username" required>
+            <input class="form-input" type="password" name="password" placeholder="Password" required>
+            <button class="form-button" type="submit">Login</button>
+        </form>
+        <a class="form-link" href="{{ url_for('register') }}">Don't have an account? Register here</a>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="error-messages">
+                {% for msg in messages %}
+                    <li>{{ msg }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>

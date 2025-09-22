@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Tracker Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+<body>
+
+    <!-- Top Bar -->
+    <header class="top-bar">
+        <button class="calendar-btn" onclick="window.location.href='/calendar'">
+            📅 Add to Calendar
+        </button>
+        <div class="profile-icon" onclick="window.location.href='/profile'">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Profile">
+        </div>
+    </header>
+
+    <!-- Exercises Section -->
+<main class="exercise-section">
+    <div class="exercise-row">
+        <div class="exercise-image">
+            <img src="{{ url_for('static', filename='images/squats.jpg') }}" alt="Squat ">
+        </div>
+        <div class="exercise-info">
+            <h1><b><u>Squat</u></b></h1>
+            <ul>
+                <li><strong>How to do:</strong></li>
+                <ol>
+                    <li><p>Stand with feet shoulder-width apart.</p></li>
+                    <li><p>Lower your hips back and down as if sitting in a chair.</p></li>
+                    <li><p>Keep your chest up and knees behind your toes.</p></li>
+                    <li><p>Return to standing.</p></li>
+                </ol>
+                <li><strong>Target Muscles:</strong><p>Muscles in the thighs, buttocks, lower back, and core.</p></li>
+                <li><strong>Benefits:</strong> <p>Builds strength in the lower body, improves mobility in the hips and knees, and supports calorie burning through full-body engagement.</p></li>
+            </ul>
+            <button onclick="window.location.href='/exercise/squat'" >Start</button>
+        </div>
+    </div>
+
+    <div class="exercise-row" >
+        <div class="exercise-image">
+            <img src="{{ url_for('static', filename='images/push.webp') }}" alt="push-ups">
+        </div>
+        <div class="exercise-info">
+            <h1><b><u>Push-Ups</u></b></h1>
+            <ul>
+                <li><strong>How to do:</strong></li>
+                <ol>
+                    <li><p>Begin in a high plank position with your hands placed slightly wider than shoulder-width apart.</p></li>
+                    <li><p>Maintain a straight line from head to heels while engaging your core.</p></li>
+                    <li><p>Lower your body until your chest is just above the floor.</p></li>
+                    <li><p>Push through your palms to return to the starting position.</p></li>
+                </ol>
+                <li><strong>Target Muscles:</strong><p>Muscles in the chest, shoulders, the back of the upper arms, and the core area.</p></li>
+                <li><strong>Benefits:</strong> <p>Improves upper body strength, enhances core stability, and supports functional movement without requiring equipment.</p></li>
+            </ul>
+            <button onclick="window.location.href='/exercise/pushup'">Start</button>
+        </div>
+    </div>
+
+    <div class="exercise-row">
+        <div class="exercise-image">
+            <img src="{{ url_for('static', filename='images/plank.jpg') }}" alt="Plank">
+        </div>
+        <div class="exercise-info">
+            <h1><b><u>Plank</u></b></h1>
+            <ul>
+                <li><strong>How to do:</strong></li>
+                <ol>
+                    <li><p>Position yourself face down and support your body on your forearms and toes.</p></li>
+                    <li><p>Keep your elbows directly beneath your shoulders.</p></li>
+                    <li><p>Maintain a straight line from head to heels.</p></li>
+                    <li><p>Engage your core and hold the position for the desired duration.</p></li>
+                </ol>
+                <li><strong>Target Muscles:</strong><p>Muscles in the abdomen, shoulders, and buttocks.</p></li>
+                <li><strong>Benefits:</strong> <p>Improves core strength and stability, supports good posture, and increases endurance in the midsection and shoulders.</p></li>
+            </ul>
+            <button onclick="window.location.href='/exercise/plank'">Start</button>
+        </div>
+    </div>
+    <div class="exercise-row">
+        <div class="exercise-image">
+            <img src="{{ url_for('static', filename='images/bicep.jpg') }}" alt="Bicep Curl">
+        </div>
+        <div class="exercise-info">
+            <h1><b><u>Bicep Curl</u></b></h1>
+            <ul>
+                <li><strong>How to do:</strong></li>
+                <ol>
+                    <li><p>Stand upright while holding a dumbbell in each hand with palms facing forward.</p></li>
+                    <li><p>Keep your elbows close to your torso.</p></li>
+                    <li><p>Curl the weights upward towards your shoulders.</p></li>
+                    <li><p>Lower the weights slowly to the starting position.</p></li>
+                </ol>
+                <li><strong>Target Muscles:</strong><p>Muscles at the front of the upper arms.</p></li>
+                <li><strong>Benefits:</strong> <p> Builds arm strength, tones the upper arms, and improves grip and forearm stability.</p></li>
+            </ul>
+            <button onclick="window.location.href='/exercise/bicep_curl'">Start</button>
+        </div>
+    </div>
+    <div class="exercise-row">
+        <div class="exercise-image">
+            <img src="{{ url_for('static', filename='images/lunges.jpg') }}" alt="Lunges">
+        </div>
+        <div class="exercise-info">
+            <h1><b><u>Lunges</u></b></h1>
+            <ul>
+                <li><strong>How to do:</strong></li>
+                <ol>
+                    <li><p>Stand upright with feet hip-width apart.</p></li>
+                    <li><p>Step one foot forward and lower your hips until both knees form a 90-degree angle.</p></li>
+                    <li><p>Ensure the front knee is aligned above the ankle.</p></li>
+                    <li><p>Push off the front foot to return to the starting position.</p></li>
+                    <li><p>Repeat on the opposite leg.</p></li>
+                </ol>
+                <li><strong>Target Muscles:</strong><p> Muscles in the front and back of the thighs, buttocks, and calves.</p></li>
+                <li><strong>Benefits:</strong> <p>Strengthens the legs, improves balance and coordination, and increases flexibility in the hip area.</p></li>
+            </ul>
+            <button onclick="window.location.href='/exercise/lunges'">Start</button>
+        </div>
+    </div>
+</main>
+
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f7fa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.calorie-container {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  width: 400px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.food-input {
+  display: flex;
+  gap: 10px;
+}
+
+.food-input input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.food-input button {
+  padding: 10px 15px;
+  background: #28a745;
+  border: none;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.food-input button:hover {
+  background: #218838;
+}
+
+.food-list {
+  margin-top: 20px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.food-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+  background: #f1f1f1;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.summary {
+  margin-top: 20px;
+  padding: 10px;
+  background: #e9ecef;
+  border-radius: 10px;
+}
